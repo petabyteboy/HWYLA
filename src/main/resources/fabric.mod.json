@@ -21,6 +21,9 @@
     ],
     "client": [
       "mcp.mobius.waila.WailaClient"
+    ],
+    "modmenu": [
+      "mcp.mobius.waila.gui.ModMenuEntry"
     ]
   },
   "mixins": [
