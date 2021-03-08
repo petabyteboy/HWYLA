@@ -10,6 +10,7 @@ import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.widget.ElementListWidget;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
@@ -45,16 +46,16 @@ public class OptionsListWidget extends ElementListWidget<OptionsListWidget.Entry
         int j = scrollPosX + 6;
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
-        this.client.getTextureManager().bindTexture(DrawableHelper.BACKGROUND_TEXTURE);
+        this.client.getTextureManager().bindTexture(DrawableHelper.OPTIONS_BACKGROUND_TEXTURE);
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         int rowLeft = this.getRowLeft();
         int scrollJump = this.top + 4 - (int)this.getScrollAmount();
 
         this.renderList(matrices, rowLeft, scrollJump, mouseX, mouseY, delta);
-        this.client.getTextureManager().bindTexture(DrawableHelper.BACKGROUND_TEXTURE);
+        this.client.getTextureManager().bindTexture(DrawableHelper.OPTIONS_BACKGROUND_TEXTURE);
         RenderSystem.enableDepthTest();
         RenderSystem.depthFunc(519);
-        bufferBuilder.begin(7, VertexFormats.POSITION_TEXTURE_COLOR);
+        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
         bufferBuilder.vertex(this.left, this.top, -100.0D).texture(0.0F, (float)this.top / 32.0F).color(64, 64, 64, 255).next();
         bufferBuilder.vertex((this.left + this.width), this.top, -100.0D).texture((float)this.width / 32.0F, (float)this.top / 32.0F).color(64, 64, 64, 255).next();
         bufferBuilder.vertex((this.left + this.width), 0.0D, -100.0D).texture((float)this.width / 32.0F, 0.0F).color(64, 64, 64, 255).next();
@@ -71,7 +72,7 @@ public class OptionsListWidget extends ElementListWidget<OptionsListWidget.Entry
         RenderSystem.disableAlphaTest();
         RenderSystem.shadeModel(7425);
         RenderSystem.disableTexture();
-        bufferBuilder.begin(7, VertexFormats.POSITION_TEXTURE_COLOR);
+        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
         bufferBuilder.vertex(this.left, (this.top + 4), 0.0D).texture(0.0F, 1.0F).color(0, 0, 0, 0).next();
         bufferBuilder.vertex(this.right, (this.top + 4), 0.0D).texture(1.0F, 1.0F).color(0, 0, 0, 0).next();
         bufferBuilder.vertex(this.right, this.top, 0.0D).texture(1.0F, 0.0F).color(0, 0, 0, 255).next();
@@ -90,7 +91,7 @@ public class OptionsListWidget extends ElementListWidget<OptionsListWidget.Entry
                 q = this.top;
             }
 
-            bufferBuilder.begin(7, VertexFormats.POSITION_TEXTURE_COLOR);
+            bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
             bufferBuilder.vertex(scrollPosX, this.bottom, 0.0D).texture(0.0F, 1.0F).color(0, 0, 0, 255).next();
             bufferBuilder.vertex(j, this.bottom, 0.0D).texture(1.0F, 1.0F).color(0, 0, 0, 255).next();
             bufferBuilder.vertex(j, this.top, 0.0D).texture(1.0F, 0.0F).color(0, 0, 0, 255).next();
@@ -131,7 +132,7 @@ public class OptionsListWidget extends ElementListWidget<OptionsListWidget.Entry
         addEntry(entry);
     }
 
-    public abstract static class Entry extends ElementListWidget.Entry<Entry> {
+    public abstract static class Entry extends ElementListWidget.Entry<mcp.mobius.waila.gui.config.OptionsListWidget.Entry> {
 
         protected final MinecraftClient client;
 

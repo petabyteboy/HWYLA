@@ -44,10 +44,10 @@ public class NetworkHandler {
                 if (WailaRegistrar.INSTANCE.hasNBTEntityProviders(entity)) {
                     WailaRegistrar.INSTANCE.getNBTEntityProviders(entity).values().forEach(l -> l.forEach(p -> p.appendServerData(tag, (ServerPlayerEntity) player, world, (LivingEntity) entity)));
                 } else {
-                    entity.toTag(tag);
+                    entity.writeNbt(tag);
                 }
 
-                tag.putInt("WailaEntityID", entity.getEntityId());
+                tag.putInt("WailaEntityID", entity.getId());
 
                 PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
                 buf.writeCompoundTag(tag);
@@ -74,7 +74,7 @@ public class NetworkHandler {
                     WailaRegistrar.INSTANCE.getNBTProviders(tile).values().forEach(l -> l.forEach(p -> p.appendServerData(tag, (ServerPlayerEntity) player, world, tile)));
                     WailaRegistrar.INSTANCE.getNBTProviders(state.getBlock()).values().forEach(l -> l.forEach(p -> p.appendServerData(tag, (ServerPlayerEntity) player, world, tile)));
                 } else {
-                    tile.toTag(tag);
+                    tile.writeNbt(tag);
                 }
 
                 tag.putInt("x", pos.getX());
@@ -95,7 +95,7 @@ public class NetworkHandler {
             return;
 
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-        buf.writeInt(entity.getEntityId());
+        buf.writeInt(entity.getId());
         MinecraftClient.getInstance().getNetworkHandler().getConnection().send(new CustomPayloadC2SPacket(REQUEST_ENTITY, buf));
     }
 
